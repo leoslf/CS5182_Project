@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>compression package &mdash; Compression  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Compression
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">compression package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-compression.models">compression.models module</a><ul>
+<li><a class="reference internal" href="#variational-approximation">Variational Approximation</a><ul>
+<li><a class="reference internal" href="#kullback-leibler-divergence-kl-divergence">Kullback-Leibler Divergence (KL-divergence)</a><ul>
+<li><a class="reference internal" href="#properties">Properties</a><ul>
+<li><a class="reference internal" href="#transformations">Transformations</a></li>
+<li><a class="reference internal" href="#variational-auto-encoder">Variational Auto-encoder</a><ul>
+<li><a class="reference internal" href="#traditional-derivation-of-a-vae">Traditional Derivation of a VAE</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#objective-function-evidence-lower-bound-elbo">Objective Function: Evidence Lower BOund (ELBO)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-compression.utils">compression.utils module</a></li>
+<li><a class="reference internal" href="#module-compression">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Compression</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>compression package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/compression.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="compression-package">
+<h1>compression package<a class="headerlink" href="#compression-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-compression.models">
+<span id="compression-models-module"></span><h2>compression.models module<a class="headerlink" href="#module-compression.models" title="Permalink to this headline">¶</a></h2>
+<p>Variational Auto-encoder (VAE) for 3D Point Clouds</p>
+<div class="section" id="variational-approximation">
+<h3>Variational Approximation<a class="headerlink" href="#variational-approximation" title="Permalink to this headline">¶</a></h3>
+<p>Let <img class="math" src="_images/math/c416be21cb3d21c52658c130034ddf7904dc291e.svg" alt="X"/> be the observed, <img class="math" src="_images/math/33455c7da2afdd926a63cd026591c157cb4378e0.svg" alt="Z"/> be the hidden (latent) variable, such that <img class="math" src="_images/math/9752c6443dc0428ad358c362d3ef2db43e369e24.svg" alt="\Prob[q]{Z}"/> is the approximation posterior to <img class="math" src="_images/math/8050785a408c014e0f32d52e30d5a9fffd8dd26d.svg" alt="\Prob[p]{Z}{X}"/>.</p>
+<div class="math">
+<p><img src="_images/math/28b3f1d7a8d69f231e748ac1e79d94147984e8d2.svg" alt="\underbrace{\Prob{Z}{X}}_\text{Posterior} &amp;= \frac{\overbrace{\Prob{X}{Z}}^\text{Likelihood} \overbrace{\Prob{Z}}^\text{Prior}}{\underbrace{\Prob{X}}_\text{Evidence}} \\
+\shortintertext{Evidence:}
+\Prob{X}    &amp;= \frac{\Prob{X}{Z} \Prob{Z}}{\Prob{Z}{X}} \\
+            &amp;\approx \frac{\Prob{X}{Z} \Prob{Z}}{\Prob[q]{Z}}"/></p>
+</div><div class="section" id="kullback-leibler-divergence-kl-divergence">
+<h4>Kullback-Leibler Divergence (KL-divergence)<a class="headerlink" href="#kullback-leibler-divergence-kl-divergence" title="Permalink to this headline">¶</a></h4>
+<div class="math">
+<p><img src="_images/math/8fa87cf5bd113f18bf283a184ebfadc9283ebbba.svg" alt="\KL{q}{p} &amp;= - \int \Prob[q]{x} \log\frac{\Prob[p]{x}}{\Prob[q]{x}} \dd{x}"/></p>
+</div><div class="section" id="properties">
+<h5>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h5>
+<ul>
+<li><p><img class="math" src="_images/math/d344d4175aa453c9972318d0a5a2c7287e313487.svg" alt="\KL{q}{p} \geq 0"/></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><img class="math" src="_images/math/a955ea55389669452ed9095a0b2bb50cab5addf3.svg" alt="\KL{q}{p} = 0"/> iff <img class="math" src="_images/math/4ca65ebfa787c4a4f28dee833b9c7fe61afb5788.svg" alt="\forall x: \Prob[q]{x} \equiv \Prob[p]{x}"/></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><img class="math" src="_images/math/00a7228a5eab0f3518ffef6fdc89e77742b03897.svg" alt="\KL{q}{p} \neq \KL{p}{q}"/></p></li>
+</ul>
+<div class="math">
+<p><img src="_images/math/a27bedd398263622faf15d0452ceb1cc8e00b7a3.svg" alt="q^\ast &amp;= \argmin_{q \in Q} \KL{\Prob[q]{Z}}{\Prob[p]{Z}{X}}"/></p>
+</div><p>However, the problem remains: KL-divergence explicitly depends on posterior.</p>
+<div class="section" id="transformations">
+<h6>Transformations<a class="headerlink" href="#transformations" title="Permalink to this headline">¶</a></h6>
+<div class="math">
+<p><img src="_images/math/402496e76282cd84d3a96d79f127208467b4640a.svg" alt="\KL{\Prob[q]{Z}}{\Prob[p]{Z}{X}}
+    &amp;= - \int \Prob[q]{z} \log\frac{\Prob[p]{z}{X}}{\Prob[q]{z}} \dd{z} \\
+    &amp;= \int \Prob[q]{z} \log\frac{\Prob[q]{z}}{\Prob[p]{z}{X}} \dd{z} \\
+    &amp;= \int \Prob[q]{z} \log\frac{\Prob[q]{z} \Prob[p]{X}}{\Prob[p]{z, X}} \dd{z} \\
+    &amp;= \underbrace{\E[q]{\log\Prob{X}}}_\text{does not depends on q} + \int \Prob[q]{z} \log\frac{\Prob[q]{z}}{\Prob[p]{z, X}} \dd{z} \\
+    &amp;= \underbrace{\log\Prob{X}}_\text{Evidence} - \underbrace{\int \Prob[q]{z} \log\frac{\Prob[p]{z, X}}{\Prob[q]{z}} \dd{z}}_\text{Evidence Lower Bound: ELBO} \\
+\shortintertext{Rearranging:}
+\text{Evidence} &amp;= \text{ELBO} + \underbrace{\mathop{KL}}_\text{KL $\geq 0$} \\
+                &amp;\geq \text{ELBO}"/></p>
+</div></div>
+<div class="section" id="variational-auto-encoder">
+<h6>Variational Auto-encoder<a class="headerlink" href="#variational-auto-encoder" title="Permalink to this headline">¶</a></h6>
+<p><em>Variational Auto-encoders</em> (VAEs) are popular <em>generative models</em> being used in many domains.</p>
+<div class="section" id="traditional-derivation-of-a-vae">
+<h7>Traditional Derivation of a VAE<a class="headerlink" href="#traditional-derivation-of-a-vae" title="Permalink to this headline">¶</a></h7>
+<p>We assume some <em>process</em> that generate the data, such as a latent variable generative model.</p>
+<p>We can formalize as follows:</p>
+<ol class="arabic simple">
+<li><p>Sample <em>latent</em> representation <img class="math" src="_images/math/101b22f794bb46ab52a01378be60129e7974c66b.svg" alt="z"/> from some <em>prior</em> distribution <img class="math" src="_images/math/3825bf8be2c9801bb4f9df8e625ee17cb4ff9a30.svg" alt="z \follows \Prob[p]{z}"/></p></li>
+<li><p>Based on the sample, create the actual representation <img class="math" src="_images/math/f5f94e597a400256e42ff8d2503773ef49b15454.svg" alt="x"/>, modelled itself as a stochastic process <img class="math" src="_images/math/0b936a349ec8f5954054f551f5f75b2ac7c61a88.svg" alt="x \follows \Prob[p]{x}{z}"/></p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="objective-function-evidence-lower-bound-elbo">
+<h6>Objective Function: Evidence Lower BOund (ELBO)<a class="headerlink" href="#objective-function-evidence-lower-bound-elbo" title="Permalink to this headline">¶</a></h6>
+<p>The objective function is to maximize the ELBO of <img class="math" src="_images/math/f5f94e597a400256e42ff8d2503773ef49b15454.svg" alt="x"/>.</p>
+<div class="math">
+<p><img src="_images/math/d2d0b5bcc00034003ceabb1887e1e396531aca61.svg" alt="\max_q \ELBO{x}"/></p>
+</div><div class="math">
+<p><img src="_images/math/fe0a882e06228ac11b647ef4fb9c6fce19908459.svg" alt="\ELBO{x}    &amp;= \underbrace{\int \Prob[q]{z}{x} \log\Prob[p]{x}{z} \dd{z}}_\text{the \textit{reconstruction term}} + \underbrace{\int \Prob[q]{z}{x} \log\frac{\Prob[q]{z}{x}}{\Prob[p]{z}} \dd{z}}_\text{KL Divergence} \\
+            &amp;= \int \Prob[q]{z}{x} \log\Prob{x}{z} \dd{z} + \KL{q}{p}"/></p>
+</div><p>where</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/d79de013e4a4e2367c8f0d9fc37fd98fc600aa5d.svg" alt="\Prob[p]{z}"/> is the <em>prior</em> on the <em>latent representation</em> <img class="math" src="_images/math/101b22f794bb46ab52a01378be60129e7974c66b.svg" alt="z"/></p></li>
+<li><p><img class="math" src="_images/math/1d794e6ffb6072564c624e2a2116f1f6fc3ab269.svg" alt="\Prob[q]{z}{x}"/> is the <em>variational encoder</em></p></li>
+<li><p><img class="math" src="_images/math/c30f0ee5f5b990519c38b94243d35d886b2b5df9.svg" alt="\Prob[p]{x}{z}"/> is the <em>decoder</em>: how likely is the input <img class="math" src="_images/math/f5f94e597a400256e42ff8d2503773ef49b15454.svg" alt="x"/> given the latent representation <img class="math" src="_images/math/101b22f794bb46ab52a01378be60129e7974c66b.svg" alt="z"/></p></li>
+</ul>
+<dl class="py class">
+<dt id="compression.models.VAE">
+<em class="property">class </em><code class="sig-prename descclassname">compression.models.</code><code class="sig-name descname">VAE</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">argv</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#compression.models.VAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="module-compression.utils">
+<span id="compression-utils-module"></span><h2>compression.utils module<a class="headerlink" href="#module-compression.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="compression.utils.compose">
+<code class="sig-prename descclassname">compression.utils.</code><code class="sig-name descname">compose</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">functions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#compression.utils.compose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="compression.utils.load_pointcloud">
+<code class="sig-prename descclassname">compression.utils.</code><code class="sig-name descname">load_pointcloud</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#compression.utils.load_pointcloud" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-compression">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-compression" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Leo Sin
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
